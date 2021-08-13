@@ -73,7 +73,7 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_CONVERSATIONS:
       const newConversations = [ ...action.conversations ];
-      newConversations.forEach(conversation => conversation.messages?.sort((a, b) => a.id - b.id))
+      newConversations.forEach(conversation => conversation.messages?.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
       return newConversations;
     case SET_MESSAGE:
       return addMessageToStore(state, action.payload);

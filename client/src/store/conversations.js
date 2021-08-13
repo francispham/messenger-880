@@ -72,7 +72,9 @@ export const addConversation = (recipientId, newMessage) => {
 const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_CONVERSATIONS:
-      return action.conversations;
+      const newConversations = [ ...action.conversations ];
+      newConversations.forEach(conversation => conversation.messages?.sort((a, b) => a.id - b.id))
+      return newConversations;
     case SET_MESSAGE:
       return addMessageToStore(state, action.payload);
     case ADD_ONLINE_USER: {

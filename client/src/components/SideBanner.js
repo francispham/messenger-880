@@ -2,6 +2,7 @@ import React from "react";
 import {
   Grid,
   Box,
+  useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -16,16 +17,22 @@ const useStyles = makeStyles(() => ({
   },
   subBox: {
     opacity: '0.85',
+    height: '100%',
     background: 'linear-gradient(#3A8DFF, #86B9FF)',
   },
   subGrid: {
     height: '100%',
-    padding: '3.5rem',
+    padding: '0.5rem',
+  },
+  subGrid600: {
+    padding: '0.5rem',
   },
 }));
 
 export default function SideBanner() {
   const classes = useStyles();
+  const smMatches = useMediaQuery('(min-width:600px)');
+  const matches = useMediaQuery('(min-width:376px)');
 
   return (
     <Box 
@@ -42,7 +49,9 @@ export default function SideBanner() {
         />
       <Box
         height= "100%"
-        top={-45}
+        top={smMatches ? -45 : 0}
+        left= {0}
+        right= {0}
         position="absolute" 
       >
         <Grid 
@@ -51,20 +60,20 @@ export default function SideBanner() {
           direction="column"
           alignItems="center" 
           justifyContent="center" 
-          className={classes.subGrid}
+          className={smMatches ? classes.subGrid : classes.subGrid600}
         > 
-          <Box padding="5px">
+          <Box padding={smMatches ? "5px" : "1rem"}>
             <CommentIcon />
           </Box>
-          <Box
-            padding= "2rem"
+          {matches && <Box
+            padding= {smMatches ? "3rem" : "0"}
             fontSize= "26px"
             color= "#FFFFFF"
             textAlign= "center"
             lineHeight={1.5}
           >
             Converse with anyone with any language
-          </Box>
+          </Box>}
         </Grid>
       </Box>
     </Box>

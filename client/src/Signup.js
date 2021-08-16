@@ -9,6 +9,7 @@ import {
   FormControl,
   TextField,
   FormLabel,
+  useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -19,11 +20,21 @@ export const useStyles = makeStyles(() => ({
   root: {
     width: '100vw',
     height: '100vh',
+    overflow: 'auto',
+    minWidth: '320px',
     background: '#F2F2F2',
+  },
+  box: {
+    overflow: 'hidden',
   },
   grid: {
     width: '1024px',
     height: '700px',
+    background: '#FFFFFF',
+  },
+  grid750: {
+    width: '100%',
+    overflow: 'auto',
     background: '#FFFFFF',
   },
   subGrid: {
@@ -34,10 +45,21 @@ export const useStyles = makeStyles(() => ({
     height: '358px',
     padding: '2rem',
   },
+  form750: {
+    width: '-webkit-fill-available',
+    margin: '0 1rem',
+    height: '358px',
+  },
   topButton: {
     padding: '1em 2em',
     fontWeight: '600',
-    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 3px 15px 0px'
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 3px 15px 0px',
+  },
+  topButton750: {
+    padding: '1em 2em',
+    fontWeight: '600',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 3px 15px 0px',
+    margin: '1rem 0.5rem',
   },
   button: {
     padding: '1em 4em',
@@ -48,6 +70,8 @@ export const useStyles = makeStyles(() => ({
 const Login = (props) => {
   const history = useHistory();
   const classes = useStyles();
+  const matches = useMediaQuery('(min-width:750px)');
+  const smMatches = useMediaQuery('(min-width:600px)');
   const { user, register } = props;
 
   const handleRegister = async (event) => {
@@ -70,19 +94,26 @@ const Login = (props) => {
       justifyContent="center"  
       className={classes.root}
     >
-      <Grid container item className={classes.grid}>
-        <Grid container alignItems="center" justifyContent="center" item xs={12} sm={5}>
+      <Grid style={ !smMatches ? {height: "100vh"}: null } container item className={matches ? classes.grid : classes.grid750}>
+        {smMatches && <Grid container alignItems="center" justifyContent="center" item sm={5}>
           <SideBanner />
-        </Grid>
+        </Grid>}
         <Grid container justifyContent="center" item xs={12} sm={7}>
           <Box position="relative" width="100%">
+            {!smMatches && <Box
+                className={ classes.box}
+                height= "25vh"
+                width="100%"
+            >
+              <SideBanner />  
+            </Box>}
             <Box right={0} position="absolute" width="100%" padding={2}>
               <Grid container alignItems="baseline" justifyContent="flex-end" item>
                 <Box fontSize="fontSize" color="secondary.main">Already have an account?</Box>
                 <Button 
                   color="primary" 
                   onClick={() => history.push("/login")}
-                  className={classes.topButton}>Login</Button>
+                  className={matches ? classes.topButton : classes.topButton750}>Login</Button>
               </Grid>
             </Box>
             <Grid 
@@ -93,7 +124,7 @@ const Login = (props) => {
               alignItems="center"
               className={classes.subGrid}
             >
-              <Box className={classes.form}>
+              <Box className={matches ? classes.form : classes.form750}>
                 <Typography variant="h4" component="h3">Create an account.</Typography>
                 <form onSubmit={handleRegister}>
                   <Grid>

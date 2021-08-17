@@ -14,7 +14,7 @@ export const theme = createTheme({
     h3: {
       fontSize: 26,
       fontWeight: 600,
-      padding: "0.5rem 0",
+      padding: "5px 0 20px",
     },
     h4: {
       fontSize: 26,
@@ -30,7 +30,14 @@ export const theme = createTheme({
     }
   },
   palette: {
-    primary: { main: "#3A8DFF" },
-    secondary: { main: "#B0B0B0" }
-  }
+    primary: { 
+      main: "#3A8DFF",
+      light: "#86B9FF",
+    },
+    secondary: { 
+      main: "#B0B0B0",
+      light: "#FFFFFF"
+    },
+  },
+  spacing: [2, 4, 8, 16, 20, 32, 43, 64, 128, 256, 512, 43],
 });

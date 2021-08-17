@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Grid,
-  Box,
-  useMediaQuery,
-} from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReactComponent as CommentIcon } from "../images/bubble.svg";
@@ -24,34 +20,29 @@ const useStyles = makeStyles(() => ({
     height: '100%',
     padding: '0.5rem',
   },
-  subGrid600: {
-    padding: '0.5rem',
-  },
 }));
 
 export default function SideBanner() {
   const classes = useStyles();
-  const smMatches = useMediaQuery('(min-width:600px)');
-  const matches = useMediaQuery('(min-width:376px)');
 
   return (
     <Box 
-      width="100%" 
-      height="700px" 
+      width={1}
+      height={700}
       position="relative" 
       className={classes.box}
     >
       <Box
-        width="100%"
-        height="100%"
+        width={1}
+        height={1}
         position="absolute" 
         className={classes.subBox}
         />
       <Box
-        height= "100%"
-        top={smMatches ? -45 : 0}
+        top={-40}
         left= {0}
         right= {0}
+        height= {1}
         position="absolute" 
       >
         <Grid 
@@ -60,20 +51,19 @@ export default function SideBanner() {
           direction="column"
           alignItems="center" 
           justifyContent="center" 
-          className={smMatches ? classes.subGrid : classes.subGrid600}
+          className={classes.subGrid}
         > 
-          <Box padding={smMatches ? "5px" : "1rem"}>
-            <CommentIcon />
-          </Box>
-          {matches && <Box
-            padding= {smMatches ? "3rem" : "0"}
+          <CommentIcon />
+          <Box
+            py={5}
+            px={7}
             fontSize= "26px"
-            color= "#FFFFFF"
-            textAlign= "center"
             lineHeight={1.5}
+            textAlign= "center"
+            color= "secondary.light"
           >
             Converse with anyone with any language
-          </Box>}
+          </Box>
         </Grid>
       </Box>
     </Box>

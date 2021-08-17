@@ -8,7 +8,7 @@ export const theme = createTheme({
       letterSpacing: 0,
       fontWeight: "700",
       textTransform: "none",
-      margin: "1rem 3rem 0",
+      margin: "1rem 2rem 0",
       fontFamily: "Montserrat, sans-serif",
     },
     h3: {

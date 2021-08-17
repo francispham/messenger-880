@@ -24,18 +24,8 @@ export const useStyles = makeStyles(() => ({
     minWidth: '320px',
     background: '#F2F2F2',
   },
-  box: {
-    overflow: 'hidden',
-  },
   grid: {
-    width: '1024px',
-    height: '700px',
-    background: '#FFFFFF',
-  },
-  grid750: {
-    width: '100%',
-    overflow: 'auto',
-    background: '#FFFFFF',
+    height: 'inherit',
   },
   subGrid: {
     height: '100%',
@@ -94,105 +84,100 @@ const Login = (props) => {
       justifyContent="center"  
       className={classes.root}
     >
-      <Grid style={ !smMatches ? {height: "100vh"}: null } container item className={matches ? classes.grid : classes.grid750}>
-        {smMatches && <Grid container alignItems="center" justifyContent="center" item sm={5}>
-          <SideBanner />
-        </Grid>}
-        <Grid container justifyContent="center" item xs={12} sm={7}>
-          <Box position="relative" width="100%">
-            {!smMatches && <Box
-                className={ classes.box}
-                height= "25vh"
-                width="100%"
-            >
-              <SideBanner />  
-            </Box>}
-            <Box right={0} position="absolute" width="100%" padding={2}>
-              <Grid container alignItems="baseline" justifyContent="flex-end" item>
-                <Box fontSize="fontSize" color="secondary.main">Already have an account?</Box>
-                <Button 
-                  color="primary" 
-                  onClick={() => history.push("/login")}
-                  className={matches ? classes.topButton : classes.topButton750}>Login</Button>
+      <Box bgcolor="#FFFFFF" width={matches ? "1024px" : "100%"} height={smMatches ? "700px" : "100%"}>
+        <Grid container item className={classes.grid}>
+          {smMatches && <Grid container alignItems="center" justifyContent="center" item sm={5}>
+            <SideBanner />
+          </Grid>}
+          <Grid container justifyContent="center" item xs={12} sm={7}>
+            <Box position="relative" width="100%">
+              <Box right={10} position="absolute" width="100%" padding={2}>
+                <Grid container alignItems="baseline" justifyContent="flex-end" item>
+                  <Box fontSize="fontSize" color="secondary.main">Already have an account?</Box>
+                  <Button 
+                    color="primary" 
+                    onClick={() => history.push("/login")}
+                    className={matches ? classes.topButton : classes.topButton750}>Login</Button>
+                </Grid>
+              </Box>
+              <Grid 
+                item 
+                container 
+                direction="column"
+                justifyContent="center" 
+                alignItems="center"
+                className={classes.subGrid}
+              >
+                <Box className={matches ? classes.form : classes.form750}>
+                  <Typography variant="h4" component="h3">Create an account.</Typography>
+                  <form onSubmit={handleRegister}>
+                    <Grid>
+                      <Grid
+                        item
+                        container
+                        direction="column"
+                        justifyContent="center"
+                      >
+                        <FormLabel>
+                          <Box
+                            paddingTop={2.5}
+                            paddingBottom={2}
+                            fontSize="fontSize"
+                            color="secondary.main">Username</Box>
+                        </FormLabel>
+                        <FormControl>
+                          <TextField
+                            aria-label="username"
+                            name="username"
+                            type="text"
+                            required
+                          />
+                        </FormControl>
+                        <FormLabel>
+                          <Box
+                            paddingTop={5.5}
+                            paddingBottom={2}
+                            fontSize="fontSize"
+                            color="secondary.main">E-mail address</Box>
+                        </FormLabel>
+                        <FormControl>
+                          <TextField
+                            aria-label="e-mail address"
+                            type="email"
+                            name="email"
+                            required
+                          />
+                        </FormControl>
+                        <FormLabel>
+                          <Box
+                            paddingTop={5.5}
+                            paddingBottom={2}
+                            fontSize="fontSize"
+                            color="secondary.main">Password</Box>
+                        </FormLabel>
+                        <FormControl>
+                          <TextField
+                            aria-label="password"
+                            type="password"
+                            inputProps={{ minLength: 6 }}
+                            name="password"
+                            required
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Box textAlign="center">
+                        <Button color="primary" type="submit" variant="contained" size="large" className={classes.button}>
+                          Create
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </form>
+                </Box>
               </Grid>
             </Box>
-            <Grid 
-              item 
-              container 
-              direction="column"
-              justifyContent="center" 
-              alignItems="center"
-              className={classes.subGrid}
-            >
-              <Box className={matches ? classes.form : classes.form750}>
-                <Typography variant="h4" component="h3">Create an account.</Typography>
-                <form onSubmit={handleRegister}>
-                  <Grid>
-                    <Grid
-                      item
-                      container
-                      direction="column"
-                      justifyContent="center"
-                    >
-                      <FormLabel>
-                        <Box
-                          paddingTop={2.5}
-                          paddingBottom={2}
-                          fontSize="fontSize"
-                          color="secondary.main">Username</Box>
-                      </FormLabel>
-                      <FormControl>
-                        <TextField
-                          aria-label="username"
-                          name="username"
-                          type="text"
-                          required
-                        />
-                      </FormControl>
-                      <FormLabel>
-                        <Box
-                          paddingTop={5.5}
-                          paddingBottom={2}
-                          fontSize="fontSize"
-                          color="secondary.main">E-mail address</Box>
-                      </FormLabel>
-                      <FormControl>
-                        <TextField
-                          aria-label="e-mail address"
-                          type="email"
-                          name="email"
-                          required
-                        />
-                      </FormControl>
-                      <FormLabel>
-                        <Box
-                          paddingTop={5.5}
-                          paddingBottom={2}
-                          fontSize="fontSize"
-                          color="secondary.main">Password</Box>
-                      </FormLabel>
-                      <FormControl>
-                        <TextField
-                          aria-label="password"
-                          type="password"
-                          inputProps={{ minLength: 6 }}
-                          name="password"
-                          required
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Box textAlign="center">
-                      <Button color="primary" type="submit" variant="contained" size="large" className={classes.button}>
-                        Create
-                      </Button>
-                    </Box>
-                  </Grid>
-                </form>
-              </Box>
-            </Grid>
-          </Box>
-        </Grid>
-      </Grid>
+          </Grid>
+        </Grid>    
+      </Box>
     </Grid>
   );
 };

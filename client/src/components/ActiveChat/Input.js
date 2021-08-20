@@ -59,16 +59,16 @@ const Input = (props) => {
       formData.append("file", file);
       formData.append("upload_preset", "message_images");
       
-      await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
-        method: "POST",
-        body: formData
-      }).then((response) => {
-          return response.json().then((json) => {
-            newUploadedImages.push(json.url);
-          }).catch((error) => {
-            console.log(error);
+      try {
+        const response = await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
+          method: "POST",
+          body: formData
         })
-      });
+        const imageJson = await response.json();
+        newUploadedImages.push(imageJson.url);
+      } catch(error) {
+        console.log(error);
+      }
     }
 
     const reqBody = {

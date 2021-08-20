@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar } from "@material-ui/core";
 
+import { ImagesList } from "../ActiveChat";
+
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex"
@@ -33,7 +35,8 @@ const useStyles = makeStyles(() => ({
 
 const OtherUserBubble = (props) => {
   const classes = useStyles();
-  const { text, time, otherUser } = props;
+  const { text, time, otherUser, attachments } = props;
+
   return (
     <Box className={classes.root}>
       <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>
@@ -42,6 +45,7 @@ const OtherUserBubble = (props) => {
           {otherUser.username} {time}
         </Typography>
         <Box className={classes.bubble}>
+          <ImagesList attachments={attachments}/>
           <Typography className={classes.text}>{text}</Typography>
         </Box>
       </Box>

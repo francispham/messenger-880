@@ -50,54 +50,40 @@ const Input = (props) => {
     }
   };
 
-  const uploadImage = async () => {
+  const uploadImage = async (file) => {
     const formData = new FormData();
-    let newUploadedImages = [];
-    
-    for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-      formData.append("file", file);
-      formData.append("upload_preset", "message_images");
-      
-      try {
-        const response = await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
-          method: "POST",
-          body: formData
-        })
-        const imageJson = await response.json();
-        newUploadedImages.push(imageJson.url);
-      } catch(error) {
-        console.log(error);
-      }
-    }
+    formData.append("file", file);
+    formData.append("upload_preset", "message_images");
 
+    try {
+      const response = await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
+        method: "POST",
+        body: formData
+      })
+      const imageJson = await response.json();
+      return imageJson.url;
+    } catch (error) {
+      console.log(error);
+    } 
+  };
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    const returnImages = await Promise.all(
+      files.map(async (file) => uploadImage(file))
+    );
+    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
-      text: text,
+      text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      attachments: newUploadedImages,
+      attachments: returnImages || [],
     };
     await postMessage(reqBody);
-    setFiles([]);
-  }
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!!files) {
-      uploadImage();
-    } else {
-      // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-      const reqBody = {
-        text: event.target.text.value,
-        recipientId: otherUser.id,
-        conversationId,
-        sender: conversationId ? null : user,
-      };
-      await postMessage(reqBody);
-    }
     setText("");
+    setFiles([]);
   };
 
   return (

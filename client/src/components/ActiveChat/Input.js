@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, uploadImage } from "../../store/utils/thunkCreators";
 import { ImagesList } from "../ActiveChat";
 
 const useStyles = makeStyles(() => ({
@@ -48,23 +48,6 @@ const Input = (props) => {
     } else {
       setText(target.value);
     }
-  };
-
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "message_images");
-
-    try {
-      const response = await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
-        method: "POST",
-        body: formData
-      })
-      const imageJson = await response.json();
-      return imageJson.url;
-    } catch (error) {
-      console.log(error);
-    } 
   };
   
   const handleSubmit = async (event) => {

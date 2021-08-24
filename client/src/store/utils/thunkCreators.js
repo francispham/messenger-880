@@ -115,3 +115,41 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "message_images");
+
+  try {
+    const response = await axios.post('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', formData, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+    }});
+    const imageJson = await response.json();
+    console.log('imageJson:', imageJson);
+    return imageJson.url;
+  } catch (error) {
+    console.error(error);
+  } 
+};
+
+/*
+? Using Fetch API:
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "message_images");
+
+  try {
+    const response = await fetch('https://api.cloudinary.com/v1_1/ddz8cmo2p/image/upload', {
+      method: "POST",
+      body: formData
+    })
+    const imageJson = await response.json();
+    return imageJson.url;
+  } catch (error) {
+    console.error(error);
+  } 
+};
+*/ 
